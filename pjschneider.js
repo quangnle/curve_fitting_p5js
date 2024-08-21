@@ -41,7 +41,6 @@ function chordLengthParam(points, first, last){
 	for (let i = first + 1; i <= last; i++){
 		result[i - first] = result[i - first] / result[last - first];
 	}
-	
 	return result;
 }
 
@@ -51,7 +50,7 @@ function computeMaxError(points, first, last, curve, u, splitPoint){
 	let p = null;
 	let v = null;
 	
-	splitPoint.val = (last - first + 1) >> 1;
+	splitPoint.val = Math.floor((last - first + 1) / 2);
 	
 	for (let i = first + 1; i < last; i++){
 		p = evalParam(3, curve, u[i - first]);
@@ -80,20 +79,15 @@ function generateBeizer(points, first, last, uPrime, tHat1, tHat2){
 		let v2 = new Vec2(tHat2.x, tHat2.y);
 
 		v1.scale(3 * uPrime[i] * (1 - uPrime[i]) * (1 - uPrime[i]));
-		v2.scale(3 * uPrime[i] * uPrime[i] * 2 * (1 - uPrime[i]));
-		
-		let Ai = [];
-		Ai.push(v1);
-		Ai.push(v2);
-		A.push(Ai);
+		v2.scale(3 * uPrime[i] * uPrime[i] * (1 - uPrime[i]));
+
+		A.push([v1, v2]);
 	}
 	
-	let C1 = [];
-	C1.push(0); C1.push(0);
+	let C1 = [0,0];
 	C.push(C1);
 	
-	let C2 = [];
-	C2.push(0); C2.push(0);
+	let C2 = [0,0];	
 	C.push(C2);
 	
 	X.push(0); X.push(0);
@@ -104,7 +98,7 @@ function generateBeizer(points, first, last, uPrime, tHat1, tHat2){
 		
 		C[0][0] = C[0][0] + va1.dot(va1);
 		C[0][1] = C[0][1] + va1.dot(va2);
-		C[1][0] = C[1][0];
+		C[1][0] = C[0][1];
 		C[1][1] = C[1][1] + va2.dot(va2);
 		
 		let vfi = new Vec2(points[first + i].x, points[first + i].y);
@@ -172,7 +166,7 @@ function fitCubic(points, first, last, tHat1, tHat2, err, result){
 		p1 = (tHat1.mul(dist)).addVector(new Vec2(p0.x, p0.y));
 		p2 = (tHat2.mul(dist)).addVector(new Vec2(p3.x, p3.y));	
 		
-		let bz = new Bezier(p0, p1, p2, p3, 20);
+		let bz = new Bezier(p0, p1, p2, p3);
 		//bz.draw();
 		
 		result.push(bz);
@@ -184,7 +178,7 @@ function fitCubic(points, first, last, tHat1, tHat2, err, result){
 	let maxError = computeMaxError(points, first, last, bzCurve, u, splitPoint);
 	
 	if (maxError < err){
-		let bz = new Bezier(bzCurve[0], bzCurve[1], bzCurve[2], bzCurve[3], 20);
+		let bz = new Bezier(bzCurve[0], bzCurve[1], bzCurve[2], bzCurve[3]);
 		result.push(bz);
 		return;
 	}

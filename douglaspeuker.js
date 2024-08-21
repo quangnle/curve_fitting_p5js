@@ -43,15 +43,13 @@ function dpReduction(points, tolerance){
 	
 	douglaspeucker(points, fPoint, lPoint, tolerance, indices)
 	
-	for (let i = 0; i < indices.length; i++){
-		for (let j = indices.length- 1; j > i ; j--){ 
-			if (indices[i] > indices[j]){
-				let tmp = indices[i];
-				indices[i] = indices[j]; 
-				indices[j] = tmp;
-			}
-		}
-	}
+	for (let i = 0; i < indices.length - 1; i++) {
+        for (let j = indices.length - 1; j > i; j--) {
+            if (indices[i] > indices[j]) {
+                [indices[i], indices[j]] = [indices[j], indices[i]]; // Swap elements
+            }
+        }
+    }
 	
 	let returnPoints = [];	
 	for (let i = 0; i < indices.length; i++){
