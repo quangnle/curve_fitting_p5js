@@ -27,8 +27,9 @@ function draw(){
 	if (rPoints.length > 0){
 		push();
 		translate(w >> 1, 0);
+		
 		// for (let i = 0; i < rPoints.length - 1; i++){
-			// line(rPoints[i].x, rPoints[i].y, rPoints[i+1].x, rPoints[i+1].y);
+		// 	line(rPoints[i].x, rPoints[i].y, rPoints[i+1].x, rPoints[i+1].y);
 		// }
 		
 		for(let i = 0; i < result.length; i++){

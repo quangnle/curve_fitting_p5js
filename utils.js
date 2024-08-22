@@ -1,11 +1,12 @@
 function evalParam(degree, points, t){
 	let temp = [];
-	for (i = 0; i <= degree; i++) {
+
+	for (let i = 0; i <= degree; i++) {
 		temp.push(new Vec2(points[i].x, points[i].y));
 	}
 	
-	for (i = 1; i < degree; i++) {	
-		for (j = 0; j <= degree-i; j++) {
+	for (let i = 1; i < degree; i++) {	
+		for (let j = 0; j < degree-i; j++) {
 			temp[j].x = (1.0 - t) * temp[j].x + t * temp[j+1].x;
 			temp[j].y = (1.0 - t) * temp[j].y + t * temp[j+1].y;
 		}
@@ -48,10 +49,10 @@ function rootFind(points, p, u)	{
 
 function reParam(points, first, last, u, curve){
 	let nPts = last - first + 1;
-	let result = []
+	let result = new Array(nPts);
 	
 	for (let i = first; i <= last; i++){
-		result.push(rootFind(curve, points[i], u[i - first + 1]));
+		result[i - first] = rootFind(curve, points[i], u[i - first]);
 	}
 	
 	return result;

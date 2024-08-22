@@ -11,7 +11,7 @@ function douglaspeucker(points, firstPoint, lastPoint, tolerance, pointIndices){
 	let maxD = 0;
 	let indexFurthest = 0;
 	
-	for (let i=firstPoint; i< lastPoint; i++){
+	for (let i=firstPoint + 1; i< lastPoint - 1; i++){
 		let distance = dPointLine(points[i], points[firstPoint], points[lastPoint]);
 		if (distance > maxD){
 			maxD = distance;
@@ -32,25 +32,26 @@ function dpReduction(points, tolerance){
 	let fPoint = 0;
 	let lPoint = points.length - 1;
 	
-	let indices = [];
-	indices.push(fPoint);
-	indices.push(lPoint)
+	let indices = [fPoint, lPoint];
 	
+	// to remove duplicate points
 	while (points[fPoint].x == points[lPoint].x && 
-			points[fPoint].y == points[lPoint].y){
+			points[fPoint].y == points[lPoint].y && lPoint > 0){
 		lPoint = lPoint - 1;
 	}
 	
 	douglaspeucker(points, fPoint, lPoint, tolerance, indices)
 	
+	// sort the indices
 	for (let i = 0; i < indices.length - 1; i++) {
         for (let j = indices.length - 1; j > i; j--) {
             if (indices[i] > indices[j]) {
-                [indices[i], indices[j]] = [indices[j], indices[i]]; // Swap elements
+                [indices[i], indices[j]] = [indices[j], indices[i]];
             }
         }
     }
 	
+	// return the selected points
 	let returnPoints = [];	
 	for (let i = 0; i < indices.length; i++){
 		returnPoints.push(points[indices[i]]);

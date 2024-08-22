@@ -30,8 +30,7 @@ function computeCenterTangent(points, centerIndex){
 }
 
 function chordLengthParam(points, first, last){
-	let result = [];
-	result.push(0);
+	let result = [0];	
 	
 	for (let i = first + 1; i <= last; i++){
 		let nextU = result[i-first-1] + points[i].dist(points[i - 1]);
@@ -41,6 +40,7 @@ function chordLengthParam(points, first, last){
 	for (let i = first + 1; i <= last; i++){
 		result[i - first] = result[i - first] / result[last - first];
 	}
+	
 	return result;
 }
 
@@ -156,6 +156,7 @@ function fitCubic(points, first, last, tHat1, tHat2, err, result){
 	let nPts = last - first + 1;
 	let splitPoint = {val: 0};
 	let p0, p1, p2, p3;
+	let maxIterations = 10;
 	
 	if (nPts == 2){
 		let segLength = points[first].dist(points[last]);
@@ -184,7 +185,7 @@ function fitCubic(points, first, last, tHat1, tHat2, err, result){
 	}
 	
 	if (maxError < iterationError){
-		for (let i = 0; i < 5; i++){
+		for (let i = 0; i < maxIterations; i++){
 			uPrime = reParam(points, first, last, u, bzCurve);
 			bzCurve = generateBeizer(points, first, last, uPrime, tHat1, tHat2);
 			maxError = computeMaxError(points, first, last, bzCurve, uPrime, splitPoint);
