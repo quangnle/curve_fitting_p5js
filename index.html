@@ -1,17 +1,46 @@
 <html>
 	<head>
-		<script src="p5lib/p5.min.js"></script>
+		<title>An implementation of the Fitting Cigitized Curves Algorithm - PJ Schneider</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="sketch-holder"></div>
+		<br/>
+		<div style="width:100%; padding: 5px;">
+			<ul style="display: box; padding: 5px; margin: 5px; float: left;">
+				<li style="display: contents;">
+					<p  id="tolerance" style="float: left;">Point Reduction Tolerance (<b>3</b> px): </p> 
+					<input id="slider" type="range" min="1" max="20" value="3" style="float: left; padding: 10px;" onchange="changeTolerance()" > 					
+				</li>
+				<li style="display: contents; ">
+					<p id="nPoints">Number of points: <b>0</b></p>		
+				</li>
+				<li style="display: contents;">
+					<p id="nRPoints">Number of points after reduction: <b>0</b></p>		
+				</li>
+			</ul>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.js" integrity="sha512-S+9EbrqLIvdeMVI0d4xfxeNpetEDxRTbmdj2fdb4o63bDUQ5wIB8juD75SVzhKSNYlcuFLdWTS56G/qBh9IbGA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="vec2.js"></script>
 		<script src="douglaspeuker.js"></script>
 		<script src="utils.js"></script>
 		<script src="bezier.js"></script>
 		<script src="pjschneider.js"></script>
 		<script src="sketch.js"></script>
-	
-	</head>
-	<body>
-		<div id="sketch-holder" style="width: 50%; float: left">
-		</div>
+		<script>
+			function changeTolerance(){
+				let slider = document.getElementById("slider");
+				let toleranceInput = document.getElementById("tolerance");
+				toleranceInput.innerHTML = `Point Reduction Tolerance (<b>${slider.value} </b> px): `;
+				tolerance = slider.value;
+				redraw();
+			}
+		</script>
 	</body>
 </html>
 
