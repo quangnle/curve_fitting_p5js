@@ -3,6 +3,7 @@ let mDown = false;
 let points = [];
 let rPoints = [];
 let tolerance = 3;
+let showControlPoints = true;
 
 function setup(){
 	var canvas = createCanvas(w, h);
@@ -12,7 +13,7 @@ function setup(){
 function draw(){
 	background(255);
 	fill(255);
-	stroke(1);	
+	stroke(0.5);	
 	rect(0,0,w-1,h-1);
 	line(w >> 1, 1, w >> 1, h-1);
 
@@ -45,14 +46,15 @@ function draw(){
 }
 
 function mousePressed(){
-	mDown = true;
-	points = [];
-	rPoints = [];
-	result = [];
+	if (mouseX > 0 && mouseX < (w >> 1) && mouseY > 0 && mouseY < h) {
+		mDown = true;
+		points = [];
+		rPoints = [];
+		result = [];
+	}
 }
 
-function mouseReleased(){
-	mDown = false;
+function drawTheCurve(){
 	if (points.length > 0){
 		rPoints = dpReduction(points, tolerance);
 		if (rPoints != null && rPoints.length > 1){
@@ -65,4 +67,9 @@ function mouseReleased(){
 			lblRPoints.innerHTML = `Number of points after reduction: <b>${rPoints.length}</b>`;
 		}
 	}	
+}
+
+function mouseReleased(){
+	mDown = false;
+	drawTheCurve();
 }

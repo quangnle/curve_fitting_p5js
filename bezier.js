@@ -48,8 +48,11 @@ var Bezier = function(p1, p2, p3, p4){
 		// ellipse(this.p3.x, this.p3.y, 3, 3);
 		// ellipse(this.p4.x, this.p4.y, 3, 3);
 
-		fill(0, 255, 0);
-		ellipse(segments[0].x, segments[0].y, 3, 3);
-		ellipse(segments[segments.length - 1].x, segments[segments.length - 1].y, 3, 3);
+		//draw the end points
+		if (showControlPoints){
+			fill(0, 255, 0);
+			ellipse(segments[0].x, segments[0].y, 3, 3);
+			ellipse(segments[segments.length - 1].x, segments[segments.length - 1].y, 3, 3);
+		}		
 	}
 }

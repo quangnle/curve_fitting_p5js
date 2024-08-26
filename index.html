@@ -11,17 +11,20 @@
 	<body>
 		<div id="sketch-holder"></div>
 		<br/>
-		<div style="width:100%; padding: 5px;">
-			<ul style="display: box; padding: 5px; margin: 5px; float: left;">
-				<li style="display: contents;">
-					<p  id="tolerance" style="float: left;">Point Reduction Tolerance (<b>3</b> px): </p> 
-					<input id="slider" type="range" min="1" max="20" value="3" style="float: left; padding: 10px;" onchange="changeTolerance()" > 					
+		<div style="width:100%; margin: 0px;">
+			<ul style="display: box; padding: 5px; margin: 5px; float: left; border-radius: 5px; background-color:green">
+				<li style="display: contents; padding: 0px; margin: 0px;">
+					<p  id="tolerance" style="float: left; padding: 0px; margin: 0px;">Point Reduction Tolerance (<b>3</b> px): </p> 
+					<input id="slider" type="range" min="1" max="20" value="3" style="float: left; padding: 0px; margin: 0px;" onchange="changeTolerance()" > 					
 				</li>
-				<li style="display: contents; ">
-					<p id="nPoints">Number of points: <b>0</b></p>		
+				<li style="display: contents; padding: 0px; margin: 0px;">
+					<p id="nPoints" style="padding: 0px; margin: 0px;">Number of points: <b>0</b></p>		
 				</li>
-				<li style="display: contents;">
-					<p id="nRPoints">Number of points after reduction: <b>0</b></p>		
+				<li style="display: contents; padding: 0px; margin: 0px;">
+					<p id="nRPoints" style="padding: 0px; margin: 0px;">Number of points after reduction: <b>0</b></p>		
+				</li>
+				<li style="display: contents; padding: 0px; margin: 0px;">
+					<input type="checkbox" id="showControlPoints" onchange="toggleControlPoints()"> Show/hide segment ends
 				</li>
 			</ul>
 		</div>
@@ -38,7 +41,14 @@
 				let toleranceInput = document.getElementById("tolerance");
 				toleranceInput.innerHTML = `Point Reduction Tolerance (<b>${slider.value} </b> px): `;
 				tolerance = slider.value;
-				redraw();
+				rPoints = [];
+				result = [];
+				drawTheCurve();
+			}
+
+			function toggleControlPoints(){
+				showControlPoints = !showControlPoints;
+				drawTheCurve();
 			}
 		</script>
 	</body>
