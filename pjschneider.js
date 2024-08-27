@@ -1,6 +1,6 @@
-function computeLeftTangent(points, endIndex){
-	let tHat1 = new Vec2(points[endIndex + 1].x, points[endIndex + 1].y)
-	let tmp = new Vec2(-points[endIndex].x, -points[endIndex].y)
+function computeLeftTangent(points, startIndex){
+	let tHat1 = new Vec2(points[startIndex + 1].x, points[startIndex + 1].y)
+	let tmp = new Vec2(-points[startIndex].x, -points[startIndex].y)
 	tHat1.add(tmp);
 	tHat1.unit();
 	
@@ -69,7 +69,7 @@ function computeMaxError(points, first, last, curve, u, splitPoint){
 function generateBeizer(points, first, last, uPrime, tHat1, tHat2){
 	let A = [];
 	let C = [];
-	let X = [];
+	let X = [0, 0];
 	
 	let bzCurve = [];
 	let nPts = last - first + 1;
@@ -89,8 +89,6 @@ function generateBeizer(points, first, last, uPrime, tHat1, tHat2){
 	
 	let C2 = [0,0];	
 	C.push(C2);
-	
-	X.push(0); X.push(0);
 	
 	for (let i = 0; i < nPts; i++){
 		let va1 = new Vec2(A[i][0].x, A[i][0].y);
@@ -168,7 +166,6 @@ function fitCubic(points, first, last, tHat1, tHat2, err, result){
 		p2 = (tHat2.mul(dist)).addVector(new Vec2(p3.x, p3.y));	
 		
 		let bz = new Bezier(p0, p1, p2, p3);
-		//bz.draw();
 		
 		result.push(bz);
 		return;
