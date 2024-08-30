@@ -7,6 +7,7 @@ function evalParam(degree, points, t){
 	
 	for (let i = 1; i < degree; i++) {	
 		for (let j = 0; j < degree-i; j++) {
+			// de Casteljau: B_i^n(t) = (1-t)B_{i-1}^{n-1}(t) + tB_{i-1}^{n-1}(t)
 			temp[j].x = (1.0 - t) * temp[j].x + t * temp[j+1].x;
 			temp[j].y = (1.0 - t) * temp[j].y + t * temp[j+1].y;
 		}

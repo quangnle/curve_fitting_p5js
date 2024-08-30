@@ -78,6 +78,7 @@ function generateBeizer(points, first, last, uPrime, tHat1, tHat2){
 		let v1 = new Vec2(tHat1.x, tHat1.y);
 		let v2 = new Vec2(tHat2.x, tHat2.y);
 
+		// from the equation: A_{i,1} = \hat{t}_1 B_1^3(u_i) and A_{i,2} = \hat{t}_2 B_2^3(u_i)
 		v1.scale(3 * uPrime[i] * (1 - uPrime[i]) * (1 - uPrime[i]));
 		v2.scale(3 * uPrime[i] * uPrime[i] * (1 - uPrime[i]));
 
